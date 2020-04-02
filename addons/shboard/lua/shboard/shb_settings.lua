@@ -16,6 +16,6 @@ SHB:AddTeam( 2, true )
 SHB:AddTeam( 3, true )
 
 -- player
-SHB:AddText( "P", function(ply) return ply:Ping() end, 20 )
+SHB:AddText( "P", function(ply) return ply:Ping() end, 20 ) -- will change to hook
 SHB:AddText( "K", function(ply) return ply:Frags() end, 20 )
 SHB:AddText( "D", function(ply) return ply:Deaths() end, 20 )

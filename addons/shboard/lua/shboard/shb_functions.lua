@@ -1,3 +1,5 @@
+local SHB = GetSHBTable()
+
 -- map name edit
 function SHB:GetFormattedMap()
 	local ttab = string.Explode("_",game.GetMap())
@@ -45,16 +47,17 @@ end
 -- title line edits
 function SHB:TLineEdit( text )
 	if text == nil then return "" end
-	tStart, tEnd = string.find( text, "{OSTIME}" )
-	if tStart then
-		text = string.sub( text, 1, tStart - 1 ) .. os.date( "%H:%M:%S" , os.time() ) .. string.sub( text, tEnd + 1 )
-	end
+	if isfunction(text) then return text() end
 	return text
 end
 
 -- add player text
-function SHB:AddText( title, ptext, width )
-	table.insert( SHB.setting.plytext, {title,ptext,width} )
+function SHB:AddRText( title, ptext, width )
+	table.insert( SHB.setting.plyRtext, {title = title, func = ptext, width = width} )
+end
+
+function SHB:AddLText( title, ptext, width )
+	table.insert( SHB.setting.plyLtext, {title = title, func = ptext, width = width} )
 end
 
 -- get board status
@@ -83,5 +86,6 @@ function SHB:ResetSettings()
 	SHB.setting.teams = {}
 	SHB.setting.teams.main = {}
 	SHB.setting.teams.sub = {}
-	SHB.setting.plytext = {}
+	SHB.setting.plyRtext = {}
+	SHB.setting.plyLtext = {}
 end

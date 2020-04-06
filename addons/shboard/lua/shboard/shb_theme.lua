@@ -1,3 +1,5 @@
+local SHB = GetSHBTable()
+
 surface.CreateFont( "SBTitle", {
 	font = "Roboto",
 	size = 40,
@@ -40,6 +42,7 @@ function SHB.theme.DrawBackground( w, h )
 end
 
 function SHB.theme.DrawTitle( w, title )
+
 	draw.Text( {
 		text = title,
 		font = "SBTitle",
@@ -94,13 +97,38 @@ function SHB.theme.DrawTLines( w, tlines )
 end
 
 function SHB.theme.DrawMainTeam( w, h )
-	
-				surface.SetDrawColor( Color(0,255,255) )
-				surface.DrawOutlinedRect( 0, 0, w, h )
+
+	surface.SetDrawColor( Color(0,255,255) )
+	surface.DrawOutlinedRect( 0, 0, w, h )
+
 end
 
 function SHB.theme.DrawSubTeam( w, h )
+
+	surface.SetDrawColor( Color(0,255,255) )
+	surface.DrawOutlinedRect( 0, 0, w, h )
+
+end
+
+function SHB.theme.DrawPlayerRight( w, h, tab )
+
+	if tab == {} then return end
+	local posx = w
+	for k, textd in pairs( tab ) do
+		posx = posx - textd.width
+		draw.Text( {
+			text = textd.text,
+			pos = { posx, 1 }
+		} )
+	end
 	
-				surface.SetDrawColor( Color(0,255,255) )
-				surface.DrawOutlinedRect( 0, 0, w, h )
+end
+
+function SHB.theme.DrawPlayerLeft( w, h, nick, rank )
+
+	draw.Text( {
+		text = nick,
+		pos = { 1, 1 }
+	} )
+
 end

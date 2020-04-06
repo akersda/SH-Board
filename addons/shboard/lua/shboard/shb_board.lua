@@ -1,3 +1,5 @@
+local SHB = GetSHBTable()
+
 local SBOARD = {}
 
 function SBOARD:Init()
@@ -8,18 +10,12 @@ function SBOARD:Init()
 	
 	for k, teamd in pairs( SHB.setting.teams.sub ) do
 		local teambox = vgui.Create("SubTeam",self)
-		teambox.data = teamd
+		teambox:AddData(teamd)
 		teambox.main = false
 	end
-	if SHB.setting.layout == "teams" then
-		for k, teamd in pairs( SHB.setting.teams.main ) do
-			local teambox = vgui.Create("MainTeam",self)
-			teambox.data = teamd
-			teambox.main = true
-		end
-	else
+	for k, teamd in pairs( SHB.setting.teams.main ) do
 		local teambox = vgui.Create("MainTeam",self)
-		teambox.data = {}
+		teambox:AddData(teamd)
 		teambox.main = true
 	end
 	self:InvalidateLayout()
@@ -38,10 +34,7 @@ function SBOARD:PerformLayout( w, h )
 	
 	self:SetSize( SHB.setting.width, SHB.setting.length )
 	self:Center()
-	local boxwidth = SHB.setting.width-8
-	if SHB.setting.layout == "teams" then
-		local boxwidth = ((SHB.setting.width-8) / table.Count(SHB.setting.teams.main)) - 8*(table.Count(SHB.setting.teams.main)-1)
-	end
+	local boxwidth = ((SHB.setting.width-8) / table.Count(SHB.setting.teams.main)) - 8*(table.Count(SHB.setting.teams.main)-1)
 	for k, teambox in pairs( self:GetChildren() ) do
 		if teambox.main == false then
 			teambox:SetTall(60)
@@ -65,7 +58,21 @@ vgui.Register( "SHBoard", SBOARD, "EditablePanel" )
 local MAIMTEAM = {}
 
 function MAIMTEAM:Init()
+	
+	self.data = {}
+	
+end
 
+function MAIMTEAM:AddData( tab )
+	
+	self.data = tab
+	for k, ply in pairs( team.GetPlayers( self.data.team ) ) do
+		local plybar = vgui.Create("PlayerBar",self)
+		plybar:SetTall(30)
+		plybar:Dock(TOP)
+		plybar:SetPlayer(ply)
+	end
+	
 end
 
 function MAIMTEAM:Paint( w, h )
@@ -81,6 +88,14 @@ local SUBTEAM = {}
 
 function SUBTEAM:Init()
 
+	self.data = {}
+
+end
+
+function SUBTEAM:AddData( tab )
+
+	self.data = tab
+	
 end
 
 function SUBTEAM:Paint( w, h )

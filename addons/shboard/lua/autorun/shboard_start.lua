@@ -1,4 +1,8 @@
-SHB = {}
+local SHB = {}
+
+function GetSHBTable()
+	return SHB
+end
 
 if SERVER then
 	

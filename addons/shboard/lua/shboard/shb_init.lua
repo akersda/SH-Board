@@ -1,3 +1,5 @@
+local SHB = GetSHBTable()
+
 -- setup
 SHB.setting = {}
 SHB.theme = {}
@@ -23,9 +25,9 @@ end)
 -- includes
 include( "shboard/shb_settings.lua" )
 
+include( "shboard/shb_actions.lua" )
 include( "shboard/shb_player.lua" )
 include( "shboard/shb_board.lua" )
-include( "shboard/shb_actions.lua" )
 
 print("====================================")
 print("Initialised scoreboard by Cptn.Sheep")

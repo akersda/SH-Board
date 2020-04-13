@@ -27,14 +27,14 @@ function SHB:AddTeam( teamn, main, name, col )
 	if main == nil or main == true then
 		table.insert( SHB.setting.teams.main, {
 			team = teamn,
-			name = name or team.GetName( teamn ),
-			col = col or team.GetColor( teamn )
+			name = name or "none",
+			col = col or "none"
 		})
 	elseif main == false then
 		table.insert( SHB.setting.teams.sub, {
 			team = teamn,
-			name = name or team.GetName( teamn ),
-			col = col or team.GetColor( teamn )
+			name = name or "none",
+			col = col or "none"
 		})
 	end
 end
@@ -60,6 +60,22 @@ function SHB:AddLText( title, ptext, width )
 	table.insert( SHB.setting.plyLtext, {title = title, func = ptext, width = width} )
 end
 
+-- get alive team number
+function SHB:GetNPAlive( teamn )
+	local atnum = 0
+	for k, ply in pairs(team.GetPlayers( teamn )) do
+		if ply:Alive() then
+			atnum = atnum + 1
+		end
+	end
+	return atnum
+end
+
+-- grey scale colour
+function SHB:GreyCol( col )
+	return Color( col.r*0.7, col.g*0.7, col.b*0.7, col.a )
+end
+
 -- get board status
 function SHB:IsOpen()
 	if !IsValid( SHB.board ) or SHB.board == {} then
@@ -71,7 +87,26 @@ end
 
 -- open board
 function SHB:Open()
+
+	for k, teams in pairs( SHB.setting.teams.main ) do
+		if teams.name == "none" then
+			SHB.setting.teams.main[k].name = team.GetName( teams.team ) or "unknown"
+		end
+		if teams.col == "none" then
+			SHB.setting.teams.main[k].col = team.GetColor( teams.team ) or "unknown"
+		end
+	end
+	for k, teams in pairs( SHB.setting.teams.sub ) do
+		if teams.name == "none" then
+			SHB.setting.teams.sub[k].name = team.GetName( teams.team ) or "unknown"
+		end
+		if teams.col == "none" then
+			SHB.setting.teams.sub[k].col = team.GetColor( teams.team ) or "unknown"
+		end
+	end
+
 	SHB.board = vgui.Create("SHBoard")
+	
 end
 
 -- close board

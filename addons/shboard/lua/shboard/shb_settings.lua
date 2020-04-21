@@ -16,7 +16,7 @@ SHB:AddTeam( 2, true )
 SHB:AddTeam( 3, true )
 
 SHB.setting.jointeam = function( teamnum )
-	LocalPlayer():ConCommand( "car_jointeam " .. teamnum )
+	LocalPlayer():ConCommand( "jointeam " .. teamnum )
 end
 
 -- player

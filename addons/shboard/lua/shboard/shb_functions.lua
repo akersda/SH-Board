@@ -24,18 +24,35 @@ function SHB:AddTeam( teamn, main, name, col )
 		print("SBoard: Settings error: AddTeam must have team number.")
 		return
 	end
-	if main == nil or main == true then
+	if istable(teamn) then
+		local teamtable = {
+		}
+		for k, v in pairs( teamn ) do
+			table.insert( teamtable , {
+				team = v[1],
+				name = v[2] or "none",
+				col = v[3] or Color(255,255,254)
+			} )
+		end
 		table.insert( SHB.setting.teams.main, {
-			team = teamn,
-			name = name or "none",
-			col = col or "none"
+			multi = true,
+			teams = teamtable
 		})
-	elseif main == false then
-		table.insert( SHB.setting.teams.sub, {
-			team = teamn,
-			name = name or "none",
-			col = col or "none"
-		})
+	else
+		if main == nil or main == true then
+			table.insert( SHB.setting.teams.main, {
+				multi = false,
+				team = teamn,
+				name = name or "none",
+				col = col or Color(255,255,254)
+			})
+		elseif main == false then
+			table.insert( SHB.setting.teams.sub, {
+				team = teamn,
+				name = name or "none",
+				col = col or Color(255,255,254)
+			})
+		end
 	end
 end
 
@@ -89,11 +106,22 @@ end
 function SHB:Open()
 
 	for k, teams in pairs( SHB.setting.teams.main ) do
-		if teams.name == "none" then
-			SHB.setting.teams.main[k].name = team.GetName( teams.team ) or "unknown"
-		end
-		if teams.col == "none" then
-			SHB.setting.teams.main[k].col = team.GetColor( teams.team ) or "unknown"
+		if teams.multi then
+			for kk, teamsn in pairs( teams.teams ) do
+				if teamsn.name == "none" then
+					SHB.setting.teams.main[k].teams[kk].name = team.GetName( teamsn.team )
+				end
+				if teamsn.col == Color(255,255,254) then
+					SHB.setting.teams.main[k].teams[kk].col = team.GetColor( teamsn.team )
+				end
+			end
+		else
+			if teams.name == "none" then
+				SHB.setting.teams.main[k].name = team.GetName( teams.team )
+			end
+			if teams.col == Color(255,255,254) then
+				SHB.setting.teams.main[k].col = team.GetColor( teams.team )
+			end
 		end
 	end
 	for k, teams in pairs( SHB.setting.teams.sub ) do

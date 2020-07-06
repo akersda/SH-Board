@@ -1,5 +1,3 @@
-local SHB = GetSHBTable()
-
 SHB:ResetSettings() -- refeshes tables
 
 -- board screen space

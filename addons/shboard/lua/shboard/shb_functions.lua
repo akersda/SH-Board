@@ -1,5 +1,3 @@
-local SHB = GetSHBTable()
-
 -- map name edit
 function SHB:GetFormattedMap()
 	local ttab = string.Explode("_",game.GetMap())
@@ -93,9 +91,12 @@ function SHB:GreyCol( col )
 	return Color( col.r*0.7, col.g*0.7, col.b*0.7, col.a )
 end
 
+-- global board
+SCOREBOARD = {}
+
 -- get board status
 function SHB:IsOpen()
-	if !IsValid( SHB.board ) or SHB.board == {} then
+	if !IsValid( SCOREBOARD ) or table.IsEmpty( SCOREBOARD ) then
 		return false
 	else
 		return true
@@ -133,13 +134,13 @@ function SHB:Open()
 		end
 	end
 
-	SHB.board = vgui.Create("SHBoard")
+	SCOREBOARD = vgui.Create("SHBoard")
 	
 end
 
 -- close board
 function SHB:Close()
-	SHB.board:Remove()
+	SCOREBOARD:Remove()
 end
 
 -- reset settings

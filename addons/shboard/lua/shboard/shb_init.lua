@@ -1,5 +1,3 @@
-local SHB = GetSHBTable()
-
 -- setup
 SHB.setting = {}
 SHB.theme = {}

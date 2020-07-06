@@ -1,5 +1,3 @@
-local SHB = GetSHBTable()
-
 local SBOARD = {}
 
 function SBOARD:Init()

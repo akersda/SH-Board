@@ -1,5 +1,3 @@
-local SHB = GetSHBTable()
-
 function SHB:actionpopup( ply )
 
 	local actions = DermaMenu()

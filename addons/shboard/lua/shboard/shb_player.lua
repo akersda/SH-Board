@@ -1,5 +1,3 @@
-local SHB = GetSHBTable()
-
 local PLAYERBAR = {}
 
 function PLAYERBAR:Init()

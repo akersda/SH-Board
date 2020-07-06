@@ -1,4 +1,4 @@
-local SHB = {}
+SHB = {}
 
 function GetSHBTable()
 	return SHB

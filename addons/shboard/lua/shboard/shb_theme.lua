@@ -1,5 +1,3 @@
-local SHB = GetSHBTable()
-
 surface.CreateFont( "SBTitle", {
 	font = "Roboto",
 	size = 40,
